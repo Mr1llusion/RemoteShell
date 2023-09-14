@@ -4,13 +4,10 @@
 
 ## Overview
 
-Welcome to the Remote Shell Project! This project consists of two main components: a server-side script and a client-side script. These scripts are designed for educational and ethical hacking purposes and provide the ability to establish a remote shell connection with a target machine, allowing for command execution, file operations, and even includes a keylogger feature.
+Welcome to the Remote Shell Project! This project consists of two main components: a server-side script and a client-side script. These scripts are designed for educational and ethical hacking purposes and provide the ability to establish a remote shell connection with a target machine, allowing for command execution, file operations, and even includes a keylogger feature for learning purposes.
 
-## License
+**As a junior ethical hacker**, I'm sharing this project with the community to learn and collaborate together.
 
-This project is licensed under the [MIT License](LICENSE), which grants you the freedom to use, modify, and distribute the code as long as you include the original copyright notice. See the [LICENSE](LICENSE) file for more details.
-
-**IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY** in accordance with the MIT License.
 
 ## Project Status
 
@@ -19,6 +16,14 @@ Please note that this project is a work in progress. I continuously working on i
 ## Usage
 
 To use the Remote Shell Project, you'll need to set up the server and client components with appropriate configurations. Detailed instructions and usage guides can be found in the project's documentation.
+
+
+
+## License
+
+This project is licensed under the [MIT License](LICENSE), which grants you the freedom to use, modify, and distribute the code as long as you include the original copyright notice. See the [LICENSE](LICENSE) file for more details.
+
+**IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY** in accordance with the MIT License.
 
 ## Contributing
 
