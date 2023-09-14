@@ -3,7 +3,7 @@
 ![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## Overview
-![Image Alt Text](https://i.pinimg.com/originals/e7/f2/48/e7f2488cca68801a19c05baf2affd961.jpg)
+<img src="https://i.pinimg.com/originals/e7/f2/48/e7f2488cca68801a19c05baf2affd961.jpg" alt="Project Logo" width="200"/>
 Welcome to the Remote Shell Project! This project consists of two main components: a server-side script and a client-side script. These scripts are designed for educational and ethical hacking purposes and provide the ability to establish a remote shell connection with a target machine, allowing for command execution, file operations, and even includes a keylogger feature.
 
 **As a junior ethical hacker**, I'm sharing this project with the community to learn and collaborate together.
