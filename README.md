@@ -18,7 +18,7 @@ Please note that this project is a work in progress. I continuously working on i
 To use the Remote Shell Project, you'll need to set up the server and client components with appropriate configurations. Detailed instructions and usage guides can be found in the project's documentation.
 
 - `pynput.keyboard`: This library is not built-in and needs to be installed separately.:
-> `pip install pynput`
+- `pip install pynput`
 
 ## License
 
