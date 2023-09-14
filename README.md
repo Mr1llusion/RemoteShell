@@ -1,4 +1,4 @@
-# Remote Shell Project
+# Remote Shell
 
 ![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)
 
