@@ -31,6 +31,7 @@ To use the Remote Shell Project, you'll need to set up the server and client com
 
 **Quick install**
 * `git clone https://github.com/Mr1llusion/RemoteShell.git`
+* `cd RemoteShell`
 * `pip install -r requirements.txt` 
 
 ## Contributing
