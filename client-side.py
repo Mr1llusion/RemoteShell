@@ -167,7 +167,7 @@ if __name__ == "__main__":
             print("[+] Connected!")
             break
         except TimeoutError:
-            print('[!] Connection timed out, retrying in 10 seconds...')
+            print('[!] Connection timed out, retrying...')
             time.sleep(5)
         except Exception as e_connect:
             print(f'[!] An error occurred: {e_connect}')
