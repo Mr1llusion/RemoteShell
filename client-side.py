@@ -169,7 +169,7 @@ class RemoteControl:
 
 
 if __name__ == "__main__":
-    server = RemoteControl('192.168.1.231', 5555)
+    server = RemoteControl(<IP>, <PORT>)
     server.connect_to_server()
 
     main_thread = threading.Thread(target=server.main_loop)
