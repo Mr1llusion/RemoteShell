@@ -154,5 +154,5 @@ class Server:
 
 
 if __name__ == "__main__":
-    server = Server(<IP>, <PORT>)
+    server = Server('192.168.0.0', 5555)  # enter ip and port
     server.start()
