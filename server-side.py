@@ -4,15 +4,11 @@
 # This script establishes a remote shell connection with a target machine, allowing the execution
 # of various commands and file operations.
 
-
-try:
-    import socket
-    import threading
-    import os
-    import json
-    from datetime import datetime
-except Exception as import_error:
-    print(f"import Error: {import_error}")
+import socket
+import threading
+import os
+import json
+from datetime import datetime
 
 
 class Server:
