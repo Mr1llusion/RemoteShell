@@ -26,13 +26,9 @@ To use the Remote Shell Project, you'll need to set up the server and client com
 
 ## Installtion
 
-**quick install**
-`git clone https://github.com/Mr1llusion/RemoteShell.git`
-
-`pynput.keyboard`, `Pillow` are not built-in libraries and need to be installed separately.
-
-- `pip install pynput`
-- `pip install Pillow`
+**Quick install**
+* `git clone https://github.com/Mr1llusion/RemoteShell.git`
+* `pip install -r requirements.txt` 
 
 ## Contributing
 
