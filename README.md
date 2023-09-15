@@ -7,7 +7,10 @@
 Welcome to the Remote Shell Project! This project consists of two main components: a **server-side script** and a **client-side script**.
 
 These scripts are designed for **educational purposes only** and provide the ability to establish a remote shell connection with a target machine, allowing for
-**command execution**, **file operations**, and a **keylogger feature**.
+* **command execution**
+* **file operations**
+* **keylogger feature**
+* **screenshot feature**
 
 **As a junior ethical hacker**, I'm sharing this project with the community to learn and collaborate together.
 
