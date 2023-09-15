@@ -24,15 +24,17 @@ To use the Remote Shell Project, you'll need to set up the server and client com
 
 - `pip install pynput`
 
+## Contributing
+
+I welcome contributions from the community. If you have ideas for improvements, bug fixes, or new features, please open an issue or submit a pull request. I appreciate your help in making this project better.
+
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE), which grants you the freedom to use, modify, and distribute the code as long as you include the original copyright notice. See the [LICENSE](LICENSE) file for more details.
 
 **IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY** in accordance with the MIT License.
 
-## Contributing
-
-I welcome contributions from the community. If you have ideas for improvements, bug fixes, or new features, please open an issue or submit a pull request. I appreciate your help in making this project better.
 
 ## Contact
 
