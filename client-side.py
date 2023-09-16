@@ -54,6 +54,8 @@ class RemoteControl:
                     char = " "
                 elif key == keyboard.Key.enter:
                     char = "\n"
+                elif key == keyboard.Key.backspace:
+                    char = "<- "
                 elif hasattr(key, 'char'):
                     char = key.char
                     # There's a bug when pressing numpy 5 on linux systems

