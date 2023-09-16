@@ -39,8 +39,8 @@ class Server:
         while True:
             try:
                 R_OUTPUT = self.target_socket.recv(1024).decode()
-                print(R_OUTPUT, end='')
                 self.dump_logging += R_OUTPUT
+                print(R_OUTPUT, end='')
             except KeyboardInterrupt:
                 self.dump_log_file()
                 break
@@ -203,7 +203,9 @@ class Server:
                     result = self.receive_data_as_json()
                     print(result)
             except KeyboardInterrupt:
-                print("[WARNING] #~ KeyboardInterrupt ~# \n</> Press [ Enter ] to stay. \n</> Type [ Quit ] to leave.")
+                print("\n[WARNING] #~ KeyboardInterrupt ~# \n\n"
+                      "</> Press [ Enter ] to stay. \n"
+                      "</> Press [ Ctrl + C ] to leave.")
                 KeyboardInterrupt_loop = input("")
                 if KeyboardInterrupt_loop.lower() == 'quit':
                     break
