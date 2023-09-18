@@ -35,6 +35,25 @@ To use the Remote Shell Project, you'll need to set up the server and client com
 * `cd RemoteShell`
 * `pip install -r requirements.txt` 
 
+# win_payload.py
+
+**[Important Note]**: This Windows payload is designed to duplicate itself with a different name in the temporary directory.
+
+## Getting Started
+
+Before using this payload, you need to configure it and convert it into an executable (exe). Follow these steps:
+
+### Prerequisites
+
+Make sure you have [PyInstaller](https://www.pyinstaller.org/) installed. If not, you can install it using pip:
+
+```bash
+pip install pyinstaller
+```
+To build the executable, open the Command Prompt (cmd) in the same directory as the payload and run:
+```bash
+PyInstaller win_payload.py --onefile --noconsole
+```
 ## Contributing
 
 I welcome contributions from the community. If you have ideas for improvements, bug fixes, or new features, please open an issue or submit a pull request. I appreciate your help in making this project better.
