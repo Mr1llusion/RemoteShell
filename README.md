@@ -6,7 +6,7 @@
 <img src="https://github.com/Mr1llusion/RemoteShell/assets/144902381/43864797-efd9-406b-a87a-8d87621f16d0" alt="Shell Terminal" width="800" height="400"/>
 
 Welcome to the Remote Shell Project! This project consists of 3 main components: 
-* `server script`  - (should be on Linux systems)
+* `Server script`  - (should be on Linux systems)
 * `Linux payload script`
 * `Windows payload script`
   
