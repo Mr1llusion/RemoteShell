@@ -6,9 +6,9 @@
 <img src="https://github.com/Mr1llusion/RemoteShell/assets/144902381/43864797-efd9-406b-a87a-8d87621f16d0" alt="Shell Terminal" width="800" height="400"/>
 
 Welcome to the Remote Shell Project! This project consists of 3 main components: 
-* `Server script`  - (should be on Linux systems)
-* `Linux payload script`
-* `Windows payload script`
+* `Server.py`  - (should be on Linux systems)
+* `Linux payload.py`
+* `Windows payload.py`
   
 These scripts are designed for **educational purposes only** and provide the ability to establish a remote shell connection with a target machine, allowing for
 * **command execution**
