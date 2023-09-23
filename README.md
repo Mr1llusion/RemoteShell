@@ -20,10 +20,6 @@ These scripts are designed for **educational purposes only** and provide the abi
 
 <img src="https://lh5.googleusercontent.com/Rz77dewOcHOhOcj3bNmgPR0tBkCE5jFM4HzjY30wmNcjY8nCIXo516UDOHG066Goc3uSgWthqWgCF2ti5S2bqhkRqkOw1xXJ_ck_H0j55Q4Q4CVrLBv9CMuuoXIGaGg1-C5_hYiG" alt="Project Logo" width="100" height="100"/>
 
-## Project Status
-
-Please note that this project is a work in progress. I continuously working on improving and expanding its capabilities. Feel free to contribute or keep an eye on this repository for updates and enhancements.
-
 ## Usage
 
 To use the Remote Shell Project, you'll need to set up the server and client components with appropriate configurations. Detailed instructions and usage guides can be found in the project's documentation.
