@@ -33,8 +33,8 @@ To use the Remote Shell Project, you'll need to set up the server and client com
 
 # Important Note
 
-**win_payload.py**: This Windows payload is designed to duplicate itself with a different name in the temporary directory (MicrosoftAddonsys.exe).
-**lin_payload.py**: This Linux payload is designed to duplicate itself with a different name in the temporary directory (/tmp/.system_lock) and then delete itself.
+* **win_payload.py**: This Windows payload is designed to duplicate itself with a different name in the temporary directory (MicrosoftAddonsys.exe).
+* **lin_payload.py**: This Linux payload is designed to duplicate itself with a different name in the temporary directory (/tmp/.system_lock) and then delete itself.
 
 ## Getting Started
 
