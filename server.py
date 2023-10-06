@@ -7,7 +7,7 @@
 # of various commands and file operations.
 
 # [</>] Problems:
-# • Problem 1: KeyboardInterrupt doesn't work on Windows.
+# • Problem 1: sometimes KeyboardInterrupt doesn't work on Windows.
 # ~ Workaround: To avoid this issue, it's recommended to run the
 # server on a Linux system where KeyboardInterrupt works as expected.
 
