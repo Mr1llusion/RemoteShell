@@ -6,7 +6,7 @@
 <img src="https://github.com/Mr1llusion/RemoteShell/assets/144902381/a0a1e265-a205-4682-8bb7-a20ad9e8bb98" alt="Shell Terminal" width="800" height="400"/>
 
 Welcome to the Remote Shell Project! This project consists of 3 main components: 
-* `Server.py`  - (should be on Linux systems)
+* `Server.py`  - (Recommended to run on linux)
 * `Linux payload.py`
 * `Windows payload.py`
   
