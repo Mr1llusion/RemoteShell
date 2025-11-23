@@ -1,5 +1,4 @@
 # Remote Shell C2 Framework
-<img width="523" height="260" alt="image" src="https://github.com/user-attachments/assets/fb2bb987-7260-4bd5-8b09-230e8e39ce1b" />
 
 > [!WARNING]
 > **Educational Purpose Only**: This tool is intended for authorized security research and education. The authors are not responsible for misuse.
