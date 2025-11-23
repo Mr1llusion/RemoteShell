@@ -1,49 +1,86 @@
-# Remote Shell
+# Remote Shell C2 Framework
+<img width="523" height="260" alt="image" src="https://github.com/user-attachments/assets/fb2bb987-7260-4bd5-8b09-230e8e39ce1b" />
 
-![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)
+> [!WARNING]
+> **Educational Purpose Only**: This tool is intended for authorized security research and education. The authors are not responsible for misuse.
 
-## Overview
-<img src="https://github.com/Mr1llusion/RemoteShell/assets/144902381/a0a1e265-a205-4682-8bb7-a20ad9e8bb98" alt="Shell Terminal" width="800" height="400"/>
+A lightweight, educational Command & Control (C2) framework written in Python. Designed for defensive analysis and understanding C2 architectures.
 
-3 main components: 
-* `Server.py`  - (Recommended to run on linux)
-* `Linux payload.py`
-* `Windows payload.py`
-  
+## Features
+
+*   **Cross-Platform Agents**: Full support for **Windows** and **Linux** targets.
+*   **Shell**:
+    *   **Autocomplete**: Tab completion for commands and filenames (both local and remote).
+    *   **Commands**: `ls`, `cat`, `pwd` works across platforms (Windows `ls` auto-translates to `dir`).
+*   **Post-Exploitation Tools**:
+    *   **Keylogger**: Capture keystrokes in real-time.
+    *   **Screenshot**: Capture high-quality screenshots.
+    *   **File Transfer**: Reliable `upload` and `download`.
+    *   **System Info**: Quick reconnaissance (`sysinfo`).
+*   **Stealth**: Ephemeral agents (no persistence mechanisms) - they vanish when closed.
+
+## Components
+
+1.  **`C2Server.py`**: The central listener and control console.
+2.  **`LinuxAgent.py`**: Python agent for Linux systems.
+3.  **`WindowsAgent.py`**: Python agent for Windows systems.
+
+## Installation
+
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/Mr1llusion/RemoteShell.git
+    cd RemoteShell
+    ```
+
+2.  **Install dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+    *Dependencies: `pynput`, `Pillow`, `pyreadline3` (Windows only)*
+
 ## Usage
 
-To use the Remote Shell Project, you'll need to set up the server and client components with appropriate configurations. Detailed instructions and usage guides can be found in the project's documentation.
-
-## Installtion
-
-**Quick install**
-* `git clone https://github.com/Mr1llusion/RemoteShell.git`
-* `cd RemoteShell`
-* `pip install -r requirements.txt` 
-
-# Important Note
-
-* **win_payload.py**: This Windows payload is designed to duplicate itself with a different name in the temporary directory (MicrosoftAddonsys.exe).
-* **lin_payload.py**: This Linux payload is designed to duplicate itself with a different name in the temporary directory (/tmp/.system_lock) and then delete itself.
-
-## Instructions for win_payload
-
-Before using this payload, you need to configure it and convert it into an executable (exe). Follow these steps:
-
-### Prerequisites
-
-Make sure you have [PyInstaller](https://www.pyinstaller.org/) installed. If not, you can install it using pip:
-
+### 1. Start the Server
+Run the listener on your attacking machine (e.g., Kali Linux):
 ```bash
-pip install pyinstaller
+python3 C2Server.py
 ```
-To build the executable, open the Command Prompt (cmd) in the same directory as the payload and run:
+*The server listens on `0.0.0.0:5555` by default.*
+
+### 2. Start an Agent
+Run the agent on the target machine:
+
+**Linux:**
 ```bash
-PyInstaller win_payload.py --onefile --noconsole
+python3 LinuxAgent.py
+```
+
+**Windows:**
+```powershell
+python WindowsAgent.py
+```
+
+### 3. Control
+Once a connection is established, you will see a shell prompt. Type `help` to see available commands.
+
+```text
+Shell> help
+
+Available Commands:
+-------------------
+sysinfo             : Get system information
+screenshot          : Capture screen
+keylog_start        : Start keylogger (Ctrl+C to stop)
+download <file>     : Download file from target
+upload <file>       : Upload file to target
+cat <file>          : Read file content
+cd <path>           : Change directory
+ls / ls -la         : List directory contents
+pwd                 : Print working directory
+clear / cls         : Clear screen
+quit                : Exit shell
 ```
 
 ## License
-
-This project is licensed under the [MIT License](LICENSE), which grants you the freedom to use, modify, and distribute the code as long as you include the original copyright notice. See the [LICENSE](LICENSE) file for more details.
-
-**IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY** in accordance with the MIT License.
+This project is licensed under the MIT License.
